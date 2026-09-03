@@ -1,15 +1,14 @@
 backend:
-  name: github
-  repo: FazlanR/fazlan-journey
+  name: git-gateway
   branch: main
 
-media_folder: "images"
+media_folder: "fazlan-site/images"
 public_folder: "/images"
 
 collections:
   - name: "posts"
     label: "Journal Posts"
-    folder: "posts"
+    folder: "fazlan-site/posts"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
