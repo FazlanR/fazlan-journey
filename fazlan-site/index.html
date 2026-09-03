@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Journey of Fazlan</title>
+<meta name="description" content="A digital autobiography and living journal documenting a life built one chapter at a time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+<!-- marked.js to parse markdown posts -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+  :root {
+    --bg:         #F5F0E8;
+    --bg-2:       #EDE6D9;
+    --ink:        #1A1612;
+    --ink-muted:  #6B5D52;
+    --ink-faint:  #9E8E82;
+    --sand:       #C4A882;
+    --sage:       #4A6741;
+    --sage-lt:    #6B8C62;
+    --rule:       rgba(26,22,18,0.12);
+    --rule-sand:  rgba(196,168,130,0.4);
+    --serif-head: 'Playfair Display', Georgia, serif;
+    --serif-body: 'Source Serif 4', Georgia, serif;
+  }
+  [data-theme="dark"] {
+    --bg:         #100E0C;
+    --bg-2:       #1A1612;
+    --ink:        #EDE6D9;
+    --ink-muted:  #A89880;
+    --ink-faint:  #6B5D52;
+    --sand:       #A08060;
+    --rule:       rgba(237,230,217,0.1);
+    --rule-sand:  rgba(160,128,96,0.3);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: var(--serif-body); font-weight: 300;
+    line-height: 1.7; transition: background 0.4s, color 0.4s;
+    overflow-x: hidden;
+  }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  button { cursor: pointer; border: none; background: none; font: inherit; color: inherit; }
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-thumb { background: var(--sand); }
+
+  /* PROGRESS */
+  #progress-bar {
+    position: fixed; top: 0; left: 0; height: 2px;
+    background: var(--sage); width: 0%; z-index: 200; transition: width 0.1s;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 3rem; transition: background 0.4s, padding 0.3s;
+  }
+  nav.scrolled {
+    background: var(--bg); padding: 1rem 3rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav-logo { font-family: var(--serif-head); font-weight: 700; font-size: 1.1rem; letter-spacing: 0.18em; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; font-size: 0.78rem; letter-spacing: 0.1em; }
+  .nav-links a { color: var(--ink-muted); transition: color 0.2s; position: relative; }
+  .nav-links a::after { content:''; position:absolute; bottom:-3px; left:0; width:0; height:1px; background:var(--sage); transition:width 0.3s; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+  #theme-toggle { font-size:0.75rem; letter-spacing:0.08em; color:var(--ink-faint); padding:0.3rem 0.6rem; border:1px solid var(--rule); border-radius:2px; transition:all 0.2s; }
+  #theme-toggle:hover { color:var(--ink); border-color:var(--ink-muted); }
+  .hamburger { display:none; flex-direction:column; gap:5px; padding:4px; }
+  .hamburger span { display:block; width:22px; height:1px; background:var(--ink); transition:all 0.3s; }
+  .hamburger.open span:nth-child(1) { transform:translateY(6px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity:0; }
+  .hamburger.open span:nth-child(3) { transform:translateY(-6px) rotate(-45deg); }
+  .mobile-menu { display:none; position:fixed; inset:0; z-index:99; background:var(--bg); flex-direction:column; align-items:center; justify-content:center; gap:2rem; }
+  .mobile-menu.open { display:flex; }
+  .mobile-menu a { font-family:var(--serif-head); font-size:1.8rem; color:var(--ink); }
+
+  /* HERO */
+  #hero { min-height:100vh; display:grid; grid-template-columns:1fr 1fr; overflow:hidden; }
+  .hero-text { display:flex; flex-direction:column; justify-content:flex-end; padding:8rem 4rem 5rem 5rem; position:relative; z-index:2; }
+  .hero-eyebrow { font-size:0.72rem; letter-spacing:0.2em; color:var(--sage); margin-bottom:2rem; display:flex; align-items:center; gap:1rem; }
+  .hero-eyebrow::before { content:''; display:block; width:40px; height:1px; background:var(--sage); }
+  .hero-headline { font-family:var(--serif-head); font-size:clamp(2.4rem,4vw,3.6rem); font-weight:400; line-height:1.18; margin-bottom:2rem; }
+  .hero-headline em { font-style:italic; color:var(--ink-muted); }
+  .hero-sub { font-size:0.95rem; line-height:1.75; color:var(--ink-muted); max-width:420px; margin-bottom:3rem; }
+  .hero-cta { display:inline-flex; align-items:center; gap:1rem; font-size:0.75rem; letter-spacing:0.16em; padding:1rem 2rem; border:1px solid var(--rule-sand); transition:all 0.3s; }
+  .hero-cta:hover { background:var(--ink); color:var(--bg); border-color:var(--ink); }
+  .hero-cta::after { content:'→'; }
+  .hero-image { position:relative; overflow:hidden; }
+  .hero-image-placeholder { width:100%; height:100%; background:linear-gradient(160deg,#2C2420 0%,#4A3C30 40%,#6B5040 100%); display:flex; align-items:flex-end; padding:3rem; }
+  .hero-image-placeholder img { width:100%; height:100%; object-fit:cover; position:absolute; inset:0; }
+  .hero-image-caption { font-size:0.7rem; letter-spacing:0.12em; color:rgba(237,230,217,0.5); position:relative; z-index:1; }
+  .hero-image-label { position:absolute; top:3rem; left:-1.5rem; font-family:var(--serif-head); font-style:italic; font-size:6rem; font-weight:900; color:rgba(237,230,217,0.04); white-space:nowrap; pointer-events:none; writing-mode:vertical-rl; transform:rotate(180deg); }
+  .hero-scroll-hint { position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:0.5rem; font-size:0.65rem; letter-spacing:0.15em; color:var(--ink-faint); z-index:3; }
+  .scroll-line { width:1px; height:40px; background:var(--sand); opacity:0.5; animation:scrollPulse 2s ease-in-out infinite; }
+  @keyframes scrollPulse { 0%,100%{opacity:0.3;} 50%{opacity:0.8;} }
+
+  /* INTRO */
+  #intro { display:grid; grid-template-columns:5fr 7fr; border-top:1px solid var(--rule); }
+  .intro-left { padding:5rem 4rem 5rem 5rem; border-right:1px solid var(--rule); display:flex; flex-direction:column; justify-content:center; }
+  .intro-pullquote { font-family:var(--serif-head); font-size:clamp(1.4rem,2.2vw,1.9rem); font-weight:400; line-height:1.4; }
+  .intro-pullquote em { font-style:italic; color:var(--ink-muted); }
+  .intro-right { padding:5rem 5rem 5rem 4rem; display:flex; flex-direction:column; justify-content:center; }
+  .intro-body { font-size:1.05rem; line-height:1.85; color:var(--ink-muted); max-width:520px; }
+  .intro-body p+p { margin-top:1.5rem; }
+  .intro-rule { width:50px; height:1px; background:var(--sand); margin:2.5rem 0; }
+  .intro-meta { font-size:0.72rem; letter-spacing:0.12em; color:var(--ink-faint); display:flex; gap:2rem; }
+  .intro-meta span { display:flex; align-items:center; gap:0.5rem; }
+  .intro-meta span::before { content:''; display:block; width:4px; height:4px; border-radius:50%; background:var(--sage); }
+
+  /* STORY */
+  #story { background:var(--bg-2); padding:7rem 5rem; border-top:1px solid var(--rule); }
+  .story-header { display:grid; grid-template-columns:1fr 2fr; gap:3rem; margin-bottom:6rem; padding-bottom:3rem; border-bottom:1px solid var(--rule); }
+  .timeline { display:grid; grid-template-columns:1fr 40px 1fr; position:relative; }
+  .timeline-spine { position:absolute; left:50%; top:0; bottom:0; width:1px; background:var(--rule-sand); transform:translateX(-50%); }
+  .timeline-left { padding:0 3rem 4rem 0; text-align:right; grid-column:1; }
+  .timeline-right { padding:0 0 4rem 3rem; grid-column:3; }
+  .timeline-center { grid-column:2; display:flex; flex-direction:column; align-items:center; padding-top:0.3rem; }
+  .timeline-dot { width:10px; height:10px; border-radius:50%; background:var(--sand); border:2px solid var(--bg-2); outline:1px solid var(--sand); flex-shrink:0; margin-top:0.3rem; }
+  .timeline-dot.active { background:var(--sage); outline-color:var(--sage); }
+  .timeline-connector { flex:1; width:1px; background:transparent; }
+  .chapter-num { font-size:0.65rem; letter-spacing:0.18em; color:var(--ink-faint); margin-bottom:0.5rem; }
+  .chapter-title { font-family:var(--serif-head); font-size:1.25rem; font-weight:500; margin-bottom:0.8rem; }
+  .chapter-body { font-size:0.88rem; line-height:1.75; color:var(--ink-muted); max-width:320px; }
+  .timeline-left .chapter-body { margin-left:auto; }
+  .chapter-placeholder { display:inline-block; margin-top:0.8rem; font-size:0.7rem; letter-spacing:0.1em; color:var(--ink-faint); border:1px dashed var(--rule-sand); padding:0.3rem 0.7rem; border-radius:2px; }
+
+  /* LESSONS */
+  #lessons { padding:7rem 5rem; border-top:1px solid var(--rule); }
+  .lessons-header { display:grid; grid-template-columns:1fr 2fr; gap:3rem; margin-bottom:5rem; }
+  .lessons-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--rule); border:1px solid var(--rule); }
+  .lesson-card { background:var(--bg); padding:3rem 2.5rem; display:flex; flex-direction:column; justify-content:space-between; min-height:220px; transition:background 0.3s; }
+  .lesson-card:hover { background:var(--bg-2); }
+  .lesson-text { font-family:var(--serif-head); font-size:clamp(1rem,1.4vw,1.2rem); font-weight:400; line-height:1.45; font-style:italic; }
+  .lesson-num { font-size:0.65rem; letter-spacing:0.15em; color:var(--ink-faint); margin-top:2rem; align-self:flex-end; }
+
+  /* JOURNAL */
+  #journal { background:var(--bg-2); padding:7rem 5rem; border-top:1px solid var(--rule); }
+  .journal-header { display:grid; grid-template-columns:1fr 2fr; gap:3rem; align-items:end; margin-bottom:5rem; }
+  .journal-header-right { display:flex; align-items:flex-end; justify-content:space-between; }
+  .categories { display:flex; gap:1rem; flex-wrap:wrap; }
+  .cat-btn { font-size:0.7rem; letter-spacing:0.1em; padding:0.4rem 1rem; border:1px solid var(--rule-sand); color:var(--ink-muted); transition:all 0.2s; border-radius:1px; }
+  .cat-btn:hover, .cat-btn.active { background:var(--ink); color:var(--bg); border-color:var(--ink); }
+
+  /* Loading state */
+  .posts-loading { text-align:center; padding:4rem; font-size:0.85rem; color:var(--ink-faint); letter-spacing:0.1em; }
+
+  /* Featured post */
+  .featured-post { display:grid; grid-template-columns:7fr 5fr; margin-bottom:1px; background:var(--rule); cursor:pointer; }
+  .featured-image { min-height:480px; position:relative; overflow:hidden; background:linear-gradient(135deg,#2C2420,#4A3C30,#2A3828); }
+  .featured-image img { width:100%; height:100%; object-fit:cover; }
+  .featured-image-label { position:absolute; bottom:0; left:0; right:0; padding:2rem; background:linear-gradient(transparent,rgba(0,0,0,0.6)); font-size:0.68rem; letter-spacing:0.15em; color:rgba(255,255,255,0.6); }
+  .featured-content { background:var(--bg); padding:3rem; display:flex; flex-direction:column; justify-content:flex-end; }
+  .post-category { font-size:0.65rem; letter-spacing:0.18em; color:var(--sage); margin-bottom:1rem; }
+  .post-title { font-family:var(--serif-head); font-size:clamp(1.4rem,2vw,1.9rem); font-weight:400; line-height:1.3; margin-bottom:1rem; }
+  .post-excerpt { font-size:0.88rem; line-height:1.7; color:var(--ink-muted); margin-bottom:1.5rem; }
+  .post-meta { display:flex; gap:1.5rem; font-size:0.68rem; letter-spacing:0.08em; color:var(--ink-faint); }
+  .read-link { display:inline-flex; align-items:center; gap:0.6rem; font-size:0.72rem; letter-spacing:0.12em; margin-top:1.5rem; border-bottom:1px solid var(--rule-sand); padding-bottom:0.2rem; transition:border-color 0.2s; }
+  .read-link:hover { border-color:var(--ink); }
+  .read-link::after { content:'→'; }
+
+  .posts-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--rule); margin-top:1px; }
+  .post-card { background:var(--bg); padding:2rem; cursor:pointer; transition:background 0.2s; }
+  .post-card:hover { background:var(--bg-2); }
+  .post-card-img { height:180px; margin:-2rem -2rem 1.5rem; background:linear-gradient(135deg,#3A2E28,#506848); overflow:hidden; }
+  .post-card-img img { width:100%; height:100%; object-fit:cover; }
+  .post-card .post-title { font-size:1.05rem; margin-bottom:0.6rem; }
+  .post-card .post-excerpt { font-size:0.82rem; }
+  .no-posts { grid-column:1/-1; text-align:center; padding:4rem; color:var(--ink-faint); font-size:0.88rem; }
+
+  /* GALLERY */
+  #memories { padding:7rem 5rem; border-top:1px solid var(--rule); }
+  .gallery-header { display:grid; grid-template-columns:1fr 2fr; gap:3rem; margin-bottom:4rem; }
+  .gallery-cats { display:flex; gap:0.8rem; flex-wrap:wrap; margin-bottom:3rem; }
+  .gallery-grid { display:grid; grid-template-columns:repeat(12,1fr); grid-template-rows:repeat(3,180px); gap:4px; }
+  .gallery-item { overflow:hidden; cursor:pointer; position:relative; transition:opacity 0.2s; }
+  .gallery-item:hover { opacity:0.9; }
+  .gallery-item:hover .gallery-overlay { opacity:1; }
+  .gi-1{grid-column:span 5;grid-row:span 2;} .gi-2{grid-column:span 4;} .gi-3{grid-column:span 3;} .gi-4{grid-column:span 4;} .gi-5{grid-column:span 3;} .gi-6{grid-column:span 5;grid-row:span 2;} .gi-7{grid-column:span 3;} .gi-8{grid-column:span 4;} .gi-9{grid-column:span 4;} .gi-10{grid-column:span 3;}
+  .gi-placeholder { width:100%; height:100%; display:flex; align-items:flex-end; padding:1rem; }
+  .gallery-overlay { position:absolute; inset:0; background:rgba(0,0,0,0.5); opacity:0; transition:opacity 0.3s; display:flex; align-items:flex-end; padding:1rem; }
+  .gallery-overlay span { font-size:0.65rem; letter-spacing:0.12em; color:rgba(255,255,255,0.8); }
+  .gi-1 .gi-placeholder{background:linear-gradient(160deg,#1A2818,#2A4020);} .gi-2 .gi-placeholder{background:linear-gradient(160deg,#2C1E14,#4A3020);} .gi-3 .gi-placeholder{background:linear-gradient(160deg,#182028,#203040);} .gi-4 .gi-placeholder{background:linear-gradient(160deg,#281818,#402020);} .gi-5 .gi-placeholder{background:linear-gradient(160deg,#201A10,#382A18);} .gi-6 .gi-placeholder{background:linear-gradient(160deg,#103020,#204830);} .gi-7 .gi-placeholder{background:linear-gradient(160deg,#201818,#301818);} .gi-8 .gi-placeholder{background:linear-gradient(160deg,#101820,#182030);} .gi-9 .gi-placeholder{background:linear-gradient(160deg,#281A10,#403020);} .gi-10 .gi-placeholder{background:linear-gradient(160deg,#141820,#202830);}
+
+  /* LIGHTBOX */
+  #lightbox { position:fixed; inset:0; z-index:300; background:rgba(0,0,0,0.92); display:none; align-items:center; justify-content:center; flex-direction:column; gap:1.5rem; }
+  #lightbox.open { display:flex; }
+  .lb-close { position:absolute; top:2rem; right:2.5rem; color:rgba(255,255,255,0.4); font-size:1.5rem; transition:color 0.2s; }
+  .lb-close:hover { color:rgba(255,255,255,0.9); }
+  .lb-image { max-width:85vw; max-height:75vh; background:#2A2220; min-width:300px; min-height:200px; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.2); font-size:0.7rem; letter-spacing:0.15em; overflow:hidden; }
+  .lb-image img { max-width:85vw; max-height:75vh; object-fit:contain; }
+  .lb-caption { font-size:0.8rem; letter-spacing:0.1em; color:rgba(255,255,255,0.5); max-width:500px; text-align:center; }
+
+  /* ABOUT */
+  #about { background:var(--bg-2); padding:7rem 5rem; border-top:1px solid var(--rule); }
+  .about-grid { display:grid; grid-template-columns:5fr 7fr; gap:6rem; align-items:start; }
+  .about-left { position:sticky; top:8rem; }
+  .about-portrait { aspect-ratio:3/4; background:linear-gradient(160deg,#2C2420,#4A3C30,#3A4830); margin-bottom:1.5rem; position:relative; overflow:hidden; }
+  .about-portrait img { width:100%; height:100%; object-fit:cover; }
+  .about-portrait-label { position:absolute; bottom:1.2rem; left:1.2rem; font-size:0.65rem; letter-spacing:0.12em; color:rgba(237,230,217,0.4); }
+  .about-name { font-family:var(--serif-head); font-size:1.5rem; font-weight:500; margin-bottom:0.3rem; }
+  .about-role { font-size:0.78rem; letter-spacing:0.1em; color:var(--ink-faint); }
+  .about-title { font-family:var(--serif-head); font-size:clamp(1.8rem,2.5vw,2.4rem); font-weight:400; line-height:1.25; margin-bottom:2.5rem; }
+  .about-body { font-size:1rem; line-height:1.9; color:var(--ink-muted); max-width:560px; }
+  .about-body p+p { margin-top:1.4rem; }
+  .about-facts { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:3rem; }
+  .about-fact { background:var(--bg-2); padding:1.5rem; }
+  .fact-label { font-size:0.65rem; letter-spacing:0.15em; color:var(--ink-faint); margin-bottom:0.4rem; }
+  .fact-value { font-family:var(--serif-head); font-size:1rem; font-weight:500; }
+
+  /* VISION */
+  #vision { padding:7rem 5rem; border-top:1px solid var(--rule); }
+  .vision-headline { font-family:var(--serif-head); font-size:clamp(2rem,3.5vw,3.2rem); font-weight:400; line-height:1.2; max-width:600px; margin-bottom:2rem; }
+  .vision-body { font-size:1rem; line-height:1.85; color:var(--ink-muted); max-width:540px; margin-bottom:5rem; }
+  .vision-timeline { position:relative; padding-left:2px; border-left:1px solid var(--rule-sand); margin-left:2rem; }
+  .vision-item { position:relative; padding:0 0 3rem 2.5rem; }
+  .vision-item::before { content:''; position:absolute; left:-5px; top:0.4rem; width:8px; height:8px; border-radius:50%; border:1px solid var(--sand); background:var(--bg); }
+  .vision-item.now::before { background:var(--sage); border-color:var(--sage); }
+  .vision-item.future::before { background:transparent; border-style:dashed; }
+  .vision-period { font-size:0.68rem; letter-spacing:0.18em; color:var(--ink-faint); margin-bottom:0.5rem; }
+  .vision-item-title { font-family:var(--serif-head); font-size:1.1rem; font-weight:500; margin-bottom:0.5rem; }
+  .vision-item-body { font-size:0.88rem; line-height:1.7; color:var(--ink-muted); max-width:460px; }
+
+  /* CONTACT */
+  #contact { background:var(--bg-2); padding:7rem 5rem; border-top:1px solid var(--rule); display:grid; grid-template-columns:1fr 1fr; gap:6rem; }
+  .contact-title { font-family:var(--serif-head); font-size:clamp(1.8rem,2.5vw,2.4rem); font-weight:400; margin-bottom:1.5rem; }
+  .contact-body { font-size:0.9rem; line-height:1.8; color:var(--ink-muted); max-width:400px; }
+  .newsletter-form { display:flex; margin-top:2rem; border:1px solid var(--rule-sand); }
+  .newsletter-input { flex:1; padding:0.85rem 1.2rem; background:transparent; border:none; font-family:var(--serif-body); font-size:0.85rem; color:var(--ink); outline:none; }
+  .newsletter-input::placeholder { color:var(--ink-faint); }
+  .newsletter-btn { padding:0.85rem 1.5rem; background:var(--ink); color:var(--bg); font-size:0.72rem; letter-spacing:0.1em; transition:background 0.2s; }
+  .newsletter-btn:hover { background:var(--sage); }
+  .contact-links { display:flex; flex-direction:column; gap:0.5rem; margin-top:2rem; }
+  .contact-link { display:flex; align-items:center; justify-content:space-between; padding:1rem 0; border-bottom:1px solid var(--rule); font-size:0.9rem; color:var(--ink-muted); transition:color 0.2s; }
+  .contact-link:hover { color:var(--ink); }
+  .contact-link span { font-size:0.65rem; letter-spacing:0.12em; color:var(--ink-faint); }
+
+  /* FOOTER */
+  footer { padding:3rem 5rem; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--rule); }
+  .footer-logo { font-family:var(--serif-head); font-size:0.9rem; font-weight:700; letter-spacing:0.18em; }
+  .footer-tagline { font-style:italic; font-size:0.82rem; color:var(--ink-faint); }
+  .footer-copy { font-size:0.68rem; letter-spacing:0.08em; color:var(--ink-faint); }
+
+  /* ARTICLE VIEW */
+  #article-view { display:none; position:fixed; inset:0; z-index:150; background:var(--bg); overflow-y:auto; }
+  #article-view.open { display:block; }
+  .article-close { position:fixed; top:1.5rem; right:2rem; z-index:160; font-size:0.72rem; letter-spacing:0.12em; color:var(--ink-muted); display:flex; align-items:center; gap:0.5rem; transition:color 0.2s; cursor:pointer; border:none; background:none; font-family:var(--serif-body); }
+  .article-close:hover { color:var(--ink); }
+  .article-hero { min-height:55vh; background:linear-gradient(160deg,#2C2420,#4A3C30); position:relative; overflow:hidden; }
+  .article-hero img { width:100%; height:100%; object-fit:cover; position:absolute; inset:0; }
+  .article-hero-content { position:absolute; bottom:0; left:0; right:0; padding:4rem 5rem; background:linear-gradient(transparent,rgba(0,0,0,0.75)); }
+  .article-hero-cat { font-size:0.68rem; letter-spacing:0.2em; color:var(--sage); margin-bottom:1rem; }
+  .article-hero-title { font-family:var(--serif-head); font-size:clamp(2rem,4vw,3.2rem); font-weight:400; line-height:1.2; color:#EDE6D9; max-width:700px; }
+  .article-hero-meta { display:flex; gap:2rem; margin-top:1rem; font-size:0.7rem; letter-spacing:0.1em; color:rgba(237,230,217,0.5); }
+  .article-body-wrap { max-width:680px; margin:0 auto; padding:5rem 2rem; }
+  .article-body { font-size:1.08rem; line-height:1.9; color:var(--ink-muted); }
+  .article-body p { margin-bottom:1.5rem; }
+  .article-body h2 { font-family:var(--serif-head); font-size:1.6rem; font-weight:400; color:var(--ink); margin:2.5rem 0 1rem; }
+  .article-body h3 { font-family:var(--serif-head); font-size:1.2rem; font-weight:500; color:var(--ink); margin:2rem 0 0.8rem; }
+  .article-body blockquote { border-left:2px solid var(--sand); padding-left:1.5rem; margin:2rem 0; font-style:italic; color:var(--ink-muted); }
+  .article-body img { width:100%; margin:2rem 0; }
+  .article-body strong { font-weight:600; color:var(--ink); }
+  .article-body em { font-style:italic; }
+  #article-progress { position:fixed; top:0; left:0; height:2px; background:var(--sage); z-index:165; width:0; transition:width 0.1s; }
+
+  /* SECTION UTILITIES */
+  .section-label { font-size:0.68rem; letter-spacing:0.2em; color:var(--ink-faint); }
+  .section-title { font-family:var(--serif-head); font-size:clamp(1.8rem,2.8vw,2.6rem); font-weight:400; line-height:1.2; margin-top:0.8rem; }
+  .section-body { font-size:0.92rem; line-height:1.8; color:var(--ink-muted); margin-top:1rem; }
+  .fade-in { opacity:0; transform:translateY(24px); transition:opacity 0.7s ease, transform 0.7s ease; }
+  .fade-in.visible { opacity:1; transform:translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width:1024px) {
+    nav { padding:1.2rem 2rem; } nav.scrolled { padding:0.8rem 2rem; }
+    .nav-links { display:none; } .hamburger { display:flex; }
+    #hero { grid-template-columns:1fr; } .hero-text { padding:7rem 2rem 4rem; } .hero-image { min-height:45vh; }
+    #intro { grid-template-columns:1fr; } .intro-left { border-right:none; border-bottom:1px solid var(--rule); padding:4rem 2rem; } .intro-right { padding:4rem 2rem; }
+    #story { padding:5rem 2rem; } .story-header { grid-template-columns:1fr; gap:1rem; }
+    .timeline { grid-template-columns:1fr 30px 1fr; }
+    #lessons { padding:5rem 2rem; } .lessons-header { grid-template-columns:1fr; gap:1rem; } .lessons-grid { grid-template-columns:1fr 1fr; }
+    #journal { padding:5rem 2rem; } .journal-header { grid-template-columns:1fr; gap:1rem; } .journal-header-right { flex-direction:column; align-items:flex-start; gap:1.5rem; }
+    .featured-post { grid-template-columns:1fr; } .featured-image { min-height:280px; }
+    .posts-grid { grid-template-columns:1fr 1fr; }
+    #memories { padding:5rem 2rem; } .gallery-header { grid-template-columns:1fr; gap:1rem; }
+    .gallery-grid { grid-template-columns:repeat(6,1fr); grid-template-rows:repeat(5,140px); }
+    .gi-1{grid-column:span 4;grid-row:span 2;} .gi-2,.gi-3,.gi-4,.gi-5{grid-column:span 3;grid-row:span 1;} .gi-6{grid-column:span 4;grid-row:span 2;} .gi-7,.gi-8,.gi-9,.gi-10{grid-column:span 3;}
+    #about { padding:5rem 2rem; } .about-grid { grid-template-columns:1fr; gap:3rem; } .about-left { position:static; }
+    #vision { padding:5rem 2rem; }
+    #contact { padding:5rem 2rem; grid-template-columns:1fr; gap:3rem; }
+    footer { padding:2.5rem 2rem; flex-direction:column; gap:1rem; text-align:center; }
+    .article-hero-content { padding:3rem 2rem; } .article-body-wrap { padding:3rem 1.5rem; }
+  }
+  @media (max-width:600px) {
+    .timeline { grid-template-columns:1fr; } .timeline-left { grid-column:1; text-align:left; padding-right:0; padding-left:1.5rem; } .timeline-right { grid-column:1; padding-left:1.5rem; } .timeline-center,.timeline-spine { display:none; }
+    .lessons-grid { grid-template-columns:1fr; } .posts-grid { grid-template-columns:1fr; }
+    .gallery-grid { grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(8,100px); }
+    .gi-1,.gi-2,.gi-3,.gi-4,.gi-5,.gi-6,.gi-7,.gi-8,.gi-9,.gi-10 { grid-column:span 2; grid-row:span 1; }
+    .about-facts { grid-template-columns:1fr; }
+  }
+  @media (prefers-reduced-motion:reduce) { *,.fade-in { transition:none !important; animation:none !important; } }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" role="dialog" aria-modal="true">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <div class="lb-image" id="lb-img"><span>[ADD PHOTO]</span></div>
+  <p class="lb-caption" id="lb-caption"></p>
+</div>
+
+<!-- ARTICLE VIEW -->
+<div id="article-view" role="dialog" aria-modal="true">
+  <div id="article-progress"></div>
+  <button class="article-close" onclick="closeArticle()">← Back to Journal</button>
+  <div class="article-hero" id="article-hero-bg">
+    <div class="article-hero-content">
+      <p class="article-hero-cat" id="article-cat"></p>
+      <h1 class="article-hero-title" id="article-title"></h1>
+      <div class="article-hero-meta" id="article-meta"></div>
+    </div>
+  </div>
+  <div class="article-body-wrap">
+    <div class="article-body" id="article-content"></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">FAZLAN</a>
+  <ul class="nav-links">
+    <li><a href="#story">Story</a></li>
+    <li><a href="#journal">Journal</a></li>
+    <li><a href="#memories">Memories</a></li>
+    <li><a href="#lessons">Lessons</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+  <div class="nav-right">
+    <button id="theme-toggle" onclick="toggleTheme()">Dark</button>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#story" onclick="closeMenu()">Story</a>
+  <a href="#journal" onclick="closeMenu()">Journal</a>
+  <a href="#memories" onclick="closeMenu()">Memories</a>
+  <a href="#lessons" onclick="closeMenu()">Lessons</a>
+  <a href="#about" onclick="closeMenu()">About</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-text fade-in">
+    <p class="hero-eyebrow">The Journey of Fazlan</p>
+    <h1 class="hero-headline">
+      This is not a<br>success story.<br>
+      <em>It's a story still<br>being written.</em>
+    </h1>
+    <p class="hero-sub">The places I've been, the people I've met, the mistakes I've made, the things I've built, and everything that shaped the person I am today.</p>
+    <a href="#intro" class="hero-cta">Enter the Journey</a>
+  </div>
+  <div class="hero-image">
+    <div class="hero-image-placeholder">
+      <span class="hero-image-caption">[ADD CINEMATIC PORTRAIT OR LANDSCAPE]</span>
+    </div>
+    <div class="hero-image-label">FAZLAN</div>
+  </div>
+  <div class="hero-scroll-hint"><div class="scroll-line"></div><span>Scroll</span></div>
+</section>
+
+<!-- INTRO -->
+<section id="intro">
+  <div class="intro-left fade-in">
+    <p class="section-label">A note before we begin</p>
+    <blockquote class="intro-pullquote">"Life rarely follows the plan we create for it. <em>And that, I've learned, is the point.</em>"</blockquote>
+  </div>
+  <div class="intro-right fade-in">
+    <div class="intro-body">
+      <p>I've learned that life rarely follows the plan we create for it. Sometimes you lose people, change direction, start again, and discover that the hardest chapters were quietly preparing you for the next one.</p>
+      <p>This is not a curated highlight reel. This is an honest attempt to document where I came from, what I went through, what I built, what I lost, and what I'm still figuring out.</p>
+      <p>Some chapters are finished. Others are still unfolding. This is where I keep track of both.</p>
+    </div>
+    <div class="intro-rule"></div>
+    <div class="intro-meta">
+      <span>Sri Lanka → Singapore</span>
+      <span>Hospitality · Growth</span>
+      <span>Selah Ceylon</span>
+    </div>
+  </div>
+</section>
+
+<!-- STORY / TIMELINE -->
+<section id="story">
+  <div class="story-header fade-in">
+    <p class="section-label">The chapters so far</p>
+    <div>
+      <h2 class="section-title">A Life Built<br>One Chapter at a Time</h2>
+      <p class="section-body">Not a straight line. Not a clean narrative. But a journey with its own shape, its own pace, and its own meaning.</p>
+    </div>
+  </div>
+  <div class="timeline">
+    <div class="timeline-spine" aria-hidden="true"></div>
+    <div class="timeline-left fade-in">
+      <p class="chapter-num">Chapter 01</p>
+      <h3 class="chapter-title">Where It Started</h3>
+      <p class="chapter-body">Sri Lanka. Where I grew up, who my family was, what the world looked like from there — and the ambitions that started forming long before I knew what to do with them.</p>
+      <span class="chapter-placeholder">[ADD CHILDHOOD STORY]</span>
+    </div>
+    <div class="timeline-center" aria-hidden="true"><div class="timeline-dot active"></div><div class="timeline-connector"></div></div>
+    <div class="timeline-right fade-in"></div>
+    <div class="timeline-left fade-in"></div>
+    <div class="timeline-center" aria-hidden="true"><div class="timeline-dot"></div><div class="timeline-connector"></div></div>
+    <div class="timeline-right fade-in">
+      <p class="chapter-num">Chapter 02</p>
+      <h3 class="chapter-title">Leaving Home</h3>
+      <p class="chapter-body">Moving to Singapore was one of the most significant decisions of my life. Adjusting to a new country, learning independence, building a life from scratch — it changed something in me.</p>
+      <span class="chapter-placeholder">[ADD STORY ABOUT MOVING TO SINGAPORE]</span>
+    </div>
+    <div class="timeline-left fade-in">
+      <p class="chapter-num">Chapter 03</p>
+      <h3 class="chapter-title">Hospitality</h3>
+      <p class="chapter-body">More than a decade in restaurants, bars, and beverage programs. Learning how to lead, how to hold pressure, how to care for people — both guests and teams.</p>
+      <span class="chapter-placeholder">[ADD CAREER MILESTONE]</span>
+    </div>
+    <div class="timeline-center" aria-hidden="true"><div class="timeline-dot"></div><div class="timeline-connector"></div></div>
+    <div class="timeline-right fade-in"></div>
+    <div class="timeline-left fade-in"></div>
+    <div class="timeline-center" aria-hidden="true"><div class="timeline-dot"></div><div class="timeline-connector"></div></div>
+    <div class="timeline-right fade-in">
+      <p class="chapter-num">Chapter 04</p>
+      <h3 class="chapter-title">FOC & The Beach</h3>
+      <p class="chapter-body">FOC Sentosa. Operations, beverage development, events, team leadership. Some of the most formative years of my career — with challenges that only showed their value in hindsight.</p>
+      <span class="chapter-placeholder">[ADD FOC STORY]</span>
+    </div>
+    <div class="timeline-left fade-in">
+      <p class="chapter-num">Chapter 05</p>
+      <h3 class="chapter-title">The Person Behind the Job</h3>
+      <p class="chapter-body">Ambition. Discipline. Failure. Relationships. The quieter parts of the story that don't appear on a CV but shaped everything else.</p>
+      <span class="chapter-placeholder">[ADD PERSONAL LESSON]</span>
+    </div>
+    <div class="timeline-center" aria-hidden="true"><div class="timeline-dot"></div><div class="timeline-connector"></div></div>
+    <div class="timeline-right fade-in"></div>
+    <div class="timeline-left fade-in"></div>
+    <div class="timeline-center" aria-hidden="true"><div class="timeline-dot"></div><div class="timeline-connector"></div></div>
+    <div class="timeline-right fade-in">
+      <p class="chapter-num">Chapter 06</p>
+      <h3 class="chapter-title">Sri Lanka</h3>
+      <p class="chapter-body">Returning to my roots. What Sri Lanka means to me now, as someone who left — and the dreams of building something there that reflects that connection.</p>
+      <span class="chapter-placeholder">[ADD SRI LANKA STORY]</span>
+    </div>
+    <div class="timeline-left fade-in">
+      <p class="chapter-num">Chapter 07</p>
+      <h3 class="chapter-title">Building Something of My Own</h3>
+      <p class="chapter-body">Selah Ceylon Hospitality Group. Villa Selah Ceylon. Luxury rooted in Sri Lankan heritage — sustainability, service, serenity.</p>
+      <span class="chapter-placeholder">[ADD SELAH CEYLON STORY]</span>
+    </div>
+    <div class="timeline-center" aria-hidden="true"><div class="timeline-dot"></div><div class="timeline-connector"></div></div>
+    <div class="timeline-right fade-in"></div>
+    <div class="timeline-left fade-in"></div>
+    <div class="timeline-center" aria-hidden="true"><div class="timeline-dot"></div></div>
+    <div class="timeline-right fade-in">
+      <p class="chapter-num">Chapter 08</p>
+      <h3 class="chapter-title">The Next Chapter</h3>
+      <p class="chapter-body">Still unfolding. Career ambitions, business goals, places to see, and versions of myself I haven't met yet.</p>
+      <span class="chapter-placeholder">[THIS CHAPTER IS STILL BEING WRITTEN]</span>
+    </div>
+  </div>
+</section>
+
+<!-- LESSONS -->
+<section id="lessons">
+  <div class="lessons-header fade-in">
+    <p class="section-label">Personal philosophies</p>
+    <div><h2 class="section-title">Things Life<br>Taught Me</h2></div>
+  </div>
+  <div class="lessons-grid">
+    <div class="lesson-card fade-in"><p class="lesson-text">"Not everyone who leaves your life is a loss."</p><span class="lesson-num">01</span></div>
+    <div class="lesson-card fade-in"><p class="lesson-text">"You don't need to have everything figured out to keep moving."</p><span class="lesson-num">02</span></div>
+    <div class="lesson-card fade-in"><p class="lesson-text">"Success means very little if you lose yourself along the way."</p><span class="lesson-num">03</span></div>
+    <div class="lesson-card fade-in"><p class="lesson-text">"Sometimes starting again is the bravest thing you can do."</p><span class="lesson-num">04</span></div>
+    <div class="lesson-card fade-in"><p class="lesson-text">"Simple things make life better."</p><span class="lesson-num">05</span></div>
+    <div class="lesson-card fade-in"><p class="lesson-text">"Hospitality taught me that dignity is the most important thing you can offer another person."</p><span class="lesson-num">06</span></div>
+    <div class="lesson-card fade-in"><p class="lesson-text">"Leaving home doesn't make you forget where you're from. It makes you understand it better."</p><span class="lesson-num">07</span></div>
+    <div class="lesson-card fade-in"><p class="lesson-text">"Some chapters end without closure. And you still have to move forward."</p><span class="lesson-num">08</span></div>
+    <div class="lesson-card fade-in"><p class="lesson-text">"The things you build slowly are the ones that last."</p><span class="lesson-num">09</span></div>
+  </div>
+</section>
+
+<!-- JOURNAL -->
+<section id="journal">
+  <div class="journal-header fade-in">
+    <div>
+      <p class="section-label">Notes from the road</p>
+      <h2 class="section-title">Journal</h2>
+    </div>
+    <div class="journal-header-right">
+      <div class="categories" id="cat-filters">
+        <button class="cat-btn active" onclick="filterPosts('all',this)">All</button>
+        <button class="cat-btn" onclick="filterPosts('Life',this)">Life</button>
+        <button class="cat-btn" onclick="filterPosts('Hospitality',this)">Hospitality</button>
+        <button class="cat-btn" onclick="filterPosts('Travel',this)">Travel</button>
+        <button class="cat-btn" onclick="filterPosts('Lessons',this)">Lessons</button>
+        <button class="cat-btn" onclick="filterPosts('Sri Lanka',this)">Sri Lanka</button>
+        <button class="cat-btn" onclick="filterPosts('Thoughts',this)">Thoughts</button>
+      </div>
+    </div>
+  </div>
+  <div id="journal-content">
+    <div class="posts-loading">Loading posts...</div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="memories">
+  <div class="gallery-header fade-in">
+    <p class="section-label">Frames from my life</p>
+    <div>
+      <h2 class="section-title">Memories</h2>
+      <p class="section-body">Not a portfolio. Not a feed. Just the images that meant something.</p>
+    </div>
+  </div>
+  <div class="gallery-cats fade-in">
+    <button class="cat-btn active">All</button>
+    <button class="cat-btn">Sri Lanka</button>
+    <button class="cat-btn">Singapore</button>
+    <button class="cat-btn">Hospitality</button>
+    <button class="cat-btn">Travel</button>
+    <button class="cat-btn">Ocean</button>
+    <button class="cat-btn">People</button>
+  </div>
+  <div class="gallery-grid fade-in">
+    <div class="gallery-item gi-1" onclick="openLightbox('Sri Lanka coast','The coast where I grew up. [ADD STORY]')"><div class="gi-placeholder"><div class="gallery-overlay"><span>Sri Lanka</span></div></div></div>
+    <div class="gallery-item gi-2" onclick="openLightbox('Singapore','The city that became home. [ADD STORY]')"><div class="gi-placeholder"><div class="gallery-overlay"><span>Singapore</span></div></div></div>
+    <div class="gallery-item gi-3" onclick="openLightbox('Behind the bar','The hours behind the bar. [ADD STORY]')"><div class="gi-placeholder"><div class="gallery-overlay"><span>Hospitality</span></div></div></div>
+    <div class="gallery-item gi-4" onclick="openLightbox('FOC Sentosa','FOC Sentosa. [ADD STORY]')"><div class="gi-placeholder"><div class="gallery-overlay"><span>Hospitality</span></div></div></div>
+    <div class="gallery-item gi-5" onclick="openLightbox('Travel','[ADD TRAVEL PHOTO STORY]')"><div class="gi-placeholder"><div class="gallery-overlay"><span>Travel</span></div></div></div>
+    <div class="gallery-item gi-6" onclick="openLightbox('Ocean','The water has always meant something to me. [ADD STORY]')"><div class="gi-placeholder"><div class="gallery-overlay"><span>Ocean</span></div></div></div>
+    <div class="gallery-item gi-7" onclick="openLightbox('People','[ADD PHOTO AND STORY]')"><div class="gi-placeholder"><div class="gallery-overlay"><span>People</span></div></div></div>
+    <div class="gallery-item gi-8" onclick="openLightbox('Mountains','[ADD PHOTO AND STORY]')"><div class="gi-placeholder"><div class="gallery-overlay"><span>Mountains</span></div></div></div>
+    <div class="gallery-item gi-9" onclick="openLightbox('Everyday Life','[ADD PHOTO AND STORY]')"><div class="gi-placeholder"><div class="gallery-overlay"><span>Everyday Life</span></div></div></div>
+    <div class="gallery-item gi-10" onclick="openLightbox('Sri Lanka','[ADD PHOTO AND STORY]')"><div class="gi-placeholder"><div class="gallery-overlay"><span>Sri Lanka</span></div></div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-left fade-in">
+      <div class="about-portrait"><span class="about-portrait-label">[ADD PORTRAIT]</span></div>
+      <p class="about-name">Fazlan</p>
+      <p class="about-role">Hospitality · Entrepreneur · Sri Lanka</p>
+    </div>
+    <div class="about-right fade-in">
+      <h2 class="about-title">More Than<br>a Job Title.</h2>
+      <div class="about-body">
+        <p>I've spent more than a decade in hospitality. Long enough to know that the job is only part of the story. The real education happens in the pressure, the late hours, the difficult moments with people — and the occasional perfect evening when everything falls into place.</p>
+        <p>I'm Sri Lankan. That's not just a nationality — it's a way of seeing the world that I carry with me wherever I go. I left, but I never stopped belonging there.</p>
+        <p>I've lived in Singapore for over a decade. Built a career here, built relationships here, and learned more about independence than I expected. Singapore made me sharper. Sri Lanka made me human. Both made me who I am.</p>
+        <p>What drives me now is the idea of building something that belongs to me — something rooted in Sri Lankan hospitality, built with the discipline and standards I developed here. Selah Ceylon Hospitality Group is that vision taking shape.</p>
+        <p>This website is my attempt to document the journey honestly. Not as a success story. Just as a life, still in progress.</p>
+      </div>
+      <div class="about-facts">
+        <div class="about-fact"><p class="fact-label">Based in</p><p class="fact-value">Singapore</p></div>
+        <div class="about-fact"><p class="fact-label">From</p><p class="fact-value">Sri Lanka</p></div>
+        <div class="about-fact"><p class="fact-label">Industry</p><p class="fact-value">Hospitality & F&B</p></div>
+        <div class="about-fact"><p class="fact-label">Building</p><p class="fact-value">Selah Ceylon Hospitality Group</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section id="vision">
+  <div class="fade-in">
+    <h2 class="vision-headline">What Comes Next?</h2>
+    <p class="vision-body">I don't know exactly where the next few years will take me. And for the first time, I'm okay with that. There are places I want to see, things I want to build, people I want to meet, and versions of myself I haven't discovered yet.</p>
+  </div>
+  <div class="vision-timeline fade-in">
+    <div class="vision-item now"><p class="vision-period">Now</p><h3 class="vision-item-title">Foundations</h3><p class="vision-item-body">Continuing to grow in hospitality leadership. Deepening the vision for Selah Ceylon. Reconnecting with Sri Lanka.</p></div>
+    <div class="vision-item future"><p class="vision-period">Near future</p><h3 class="vision-item-title">Villa Selah Ceylon</h3><p class="vision-item-body">Bringing the concept to life. A luxury villa rooted in Sri Lankan heritage. Sustainability, service, serenity. Something built to last.</p></div>
+    <div class="vision-item future"><p class="vision-period">Further out</p><h3 class="vision-item-title">Selah Ceylon Hospitality Group</h3><p class="vision-item-body">Expanding the vision. A hospitality brand that represents Sri Lanka at the highest level of quality and care.</p></div>
+    <div class="vision-item future"><p class="vision-period">Always</p><h3 class="vision-item-title">Becoming a better version of myself</h3><p class="vision-item-body">Travel. Learning. Adventure. The things that keep you honest about who you are and who you still want to be.</p></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="fade-in">
+    <h2 class="contact-title">Stay in touch.</h2>
+    <p class="contact-body">If something here resonated with you, or if you're working on something in hospitality, travel, or Sri Lanka — I'd be glad to hear from you.</p>
+    <div class="newsletter-form">
+      <input type="email" class="newsletter-input" placeholder="Your email address">
+      <button class="newsletter-btn">Subscribe</button>
+    </div>
+    <p style="font-size:0.68rem;color:var(--ink-faint);margin-top:0.8rem;letter-spacing:0.06em;">Occasional updates. No noise.</p>
+  </div>
+  <div class="fade-in">
+    <p class="section-label" style="margin-bottom:1.5rem;">Find me</p>
+    <div class="contact-links">
+      <a href="#" class="contact-link">Instagram <span>[ADD HANDLE]</span></a>
+      <a href="#" class="contact-link">LinkedIn <span>[ADD PROFILE]</span></a>
+      <a href="#" class="contact-link">Email <span>[ADD EMAIL]</span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo">FAZLAN</span>
+  <span class="footer-tagline">Still becoming.</span>
+  <span class="footer-copy">© 2025 Fazlan. A life in progress.</span>
+</footer>
+
+<script>
+/* ─── THEME ─── */
+let dark = false;
+function toggleTheme() {
+  dark = !dark;
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+  document.getElementById('theme-toggle').textContent = dark ? 'Light' : 'Dark';
+}
+
+/* ─── NAV + PROGRESS ─── */
+const nav = document.getElementById('nav');
+const progressBar = document.getElementById('progress-bar');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+  const h = document.documentElement;
+  progressBar.style.width = (window.scrollY / (h.scrollHeight - h.clientHeight) * 100) + '%';
+});
+
+/* ─── FADE IN ─── */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      e.target.style.transitionDelay = (i % 3) * 0.08 + 's';
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+/* ─── MOBILE MENU ─── */
+function toggleMenu() {
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('mobile-menu').classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('mobile-menu').classList.remove('open');
+}
+
+/* ─── LIGHTBOX ─── */
+function openLightbox(label, caption) {
+  document.getElementById('lb-img').innerHTML = '<span>' + label + ' — [ADD PHOTO]</span>';
+  document.getElementById('lb-caption').textContent = caption;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeLightbox();
+});
+
+/* ─── ARTICLE VIEW ─── */
+function openArticle(post) {
+  document.getElementById('article-cat').textContent = (post.category || '').toUpperCase();
+  document.getElementById('article-title').textContent = post.title;
+  const d = new Date(post.date);
+  const dateStr = d.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+  document.getElementById('article-meta').innerHTML = `<span>${dateStr}</span><span>${post.readingTime || '5 min read'}</span>`;
+
+  // Set hero bg image if available
+  const heroBg = document.getElementById('article-hero-bg');
+  if (post.featuredImage) {
+    heroBg.style.backgroundImage = `url(${post.featuredImage})`;
+    heroBg.style.backgroundSize = 'cover';
+    heroBg.style.backgroundPosition = 'center';
+  } else {
+    heroBg.style.backgroundImage = '';
+  }
+
+  // Parse markdown body
+  const rawBody = post.body || '';
+  document.getElementById('article-content').innerHTML = marked.parse(rawBody);
+
+  const view = document.getElementById('article-view');
+  view.classList.add('open');
+  view.scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+
+  view.onscroll = () => {
+    const p = view.scrollTop / (view.scrollHeight - view.clientHeight);
+    document.getElementById('article-progress').style.width = (p * 100) + '%';
+  };
+}
+function closeArticle() {
+  document.getElementById('article-view').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ─── PARSE FRONTMATTER ─── */
+function parseFrontmatter(text) {
+  const match = text.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+  if (!match) return { body: text };
+  const meta = {};
+  match[1].split('\n').forEach(line => {
+    const i = line.indexOf(':');
+    if (i === -1) return;
+    const key = line.slice(0, i).trim();
+    let val = line.slice(i + 1).trim();
+    if (val.startsWith('"') && val.endsWith('"')) val = val.slice(1, -1);
+    meta[key] = val;
+  });
+  meta.body = match[2].trim();
+  return meta;
+}
+
+/* ─── LOAD POSTS FROM /posts/ ─── */
+let allPosts = [];
+
+async function loadPosts() {
+  try {
+    // Fetch the posts index — GitHub Pages serves directory listings
+    // We fetch a known manifest file, falling back to demo posts
+    const res = await fetch('/posts/manifest.json');
+    if (!res.ok) throw new Error('no manifest');
+    const files = await res.json();
+    const posts = await Promise.all(files.map(async f => {
+      const r = await fetch('/posts/' + f);
+      const txt = await r.text();
+      return parseFrontmatter(txt);
+    }));
+    allPosts = posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+  } catch {
+    // Use demo posts if no real posts yet
+    allPosts = getDemoPosts();
+  }
+  renderPosts(allPosts);
+}
+
+function getDemoPosts() {
+  return [
+    {
+      title: "What 10 Years in Hospitality Taught Me",
+      date: "2025-05-01",
+      category: "Hospitality",
+      readingTime: "8 min read",
+      excerpt: "Over a decade of late nights, difficult guests, impossible deadlines, and moments of unexpected beauty. What the industry gave me — and what it cost.",
+      featured: "true",
+      body: "Ten years is long enough to stop romanticising something. Long enough to see it clearly — the beauty and the cost, the things it builds in you and the things it quietly takes away.\n\nWhat I know now is that hospitality isn't really about food or drinks or service in the technical sense. It's about reading people. Understanding what they need before they know how to ask for it.\n\n> *[Add your own stories and lessons here. What moments stand out? What did the industry teach you that nothing else could?]*\n\nI've managed teams, beverage programs, operations. I've worked with people who changed how I think, and in environments that tested how much pressure I could absorb without breaking.\n\nThe industry didn't give me everything. But it gave me enough."
+    },
+    {
+      title: "Leaving Home Changes You",
+      date: "2025-01-10",
+      category: "Life",
+      readingTime: "6 min read",
+      excerpt: "There's a version of you that only exists after you've left everything familiar behind.",
+      body: "There's a version of you that only exists after you've left everything familiar behind.\n\nI didn't know that when I left Sri Lanka. I thought I was just moving cities. I didn't realise I was moving into a completely different version of myself.\n\n> *[Add your story about leaving Sri Lanka and arriving in Singapore. What was the first week like? What did you miss? What surprised you?]*\n\nIndependence is a quiet thing. Nobody gives you a trophy for figuring out how to live alone in a new country. You just do it, slowly, and then one day you realise you've built something out of nothing."
+    },
+    {
+      title: "Things I Wish I Knew at 20",
+      date: "2025-03-15",
+      category: "Lessons",
+      readingTime: "5 min read",
+      excerpt: "The things nobody tells you when you're twenty and certain you have it figured out.",
+      body: "The things nobody tells you when you're twenty and certain you have it figured out.\n\nAt twenty, I thought I knew enough. I was ambitious, maybe a little reckless, and convinced that effort alone would carry me wherever I wanted to go.\n\nI wasn't entirely wrong. But I wasn't entirely right either.\n\n> *[Add your own list here. What would you tell your 20-year-old self? Be honest, not inspirational.]*\n\nThe things I'd tell myself now are quieter than I expected. Less about strategy, more about patience."
+    }
+  ];
+}
+
+function renderPosts(posts) {
+  const container = document.getElementById('journal-content');
+  if (!posts.length) {
+    container.innerHTML = '<div class="posts-loading">No posts yet. Write your first story in the admin panel.</div>';
+    return;
+  }
+
+  const featured = posts.find(p => p.featured === 'true' || p.featured === true) || posts[0];
+  const rest = posts.filter(p => p !== featured).slice(0, 6);
+
+  const gradients = [
+    'linear-gradient(135deg,#3A2E28,#506848)',
+    'linear-gradient(135deg,#2A3828,#4A5A38)',
+    'linear-gradient(135deg,#383028,#5A4838)',
+    'linear-gradient(135deg,#283838,#3A4A60)',
+    'linear-gradient(135deg,#382828,#604040)',
+    'linear-gradient(135deg,#303030,#484830)'
+  ];
+
+  let html = `
+    <div class="featured-post fade-in" onclick='openArticle(${JSON.stringify(featured)})'>
+      <div class="featured-image" style="${featured.featuredImage ? `background-image:url(${featured.featuredImage});background-size:cover;background-position:center` : ''}">
+        ${!featured.featuredImage ? '<div class="featured-image-label">[ADD FEATURED IMAGE]</div>' : ''}
+      </div>
+      <div class="featured-content">
+        <p class="post-category">${featured.category || ''}</p>
+        <h3 class="post-title">${featured.title}</h3>
+        <p class="post-excerpt">${featured.excerpt || ''}</p>
+        <div class="post-meta">
+          <span>${new Date(featured.date).toLocaleDateString('en-GB',{month:'long',year:'numeric'})}</span>
+          <span>${featured.readingTime || '5 min read'}</span>
+        </div>
+        <span class="read-link">Read article</span>
+      </div>
+    </div>`;
+
+  if (rest.length) {
+    html += '<div class="posts-grid" id="posts-grid">';
+    rest.forEach((p, i) => {
+      html += `
+        <article class="post-card fade-in" data-cat="${p.category}" onclick='openArticle(${JSON.stringify(p)})'>
+          <div class="post-card-img" style="${p.featuredImage ? `background-image:url(${p.featuredImage});background-size:cover;background-position:center` : `background:${gradients[i % gradients.length]}`}"></div>
+          <p class="post-category">${p.category || ''}</p>
+          <h3 class="post-title">${p.title}</h3>
+          <p class="post-excerpt">${p.excerpt || ''}</p>
+          <div class="post-meta">
+            <span>${new Date(p.date).toLocaleDateString('en-GB',{month:'long',year:'numeric'})}</span>
+            <span>${p.readingTime || '5 min read'}</span>
+          </div>
+          <span class="read-link">Read</span>
+        </article>`;
+    });
+    html += '</div>';
+  }
+
+  container.innerHTML = html;
+  container.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+}
+
+/* ─── FILTER ─── */
+function filterPosts(cat, btn) {
+  document.querySelectorAll('#cat-filters .cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const filtered = cat === 'all' ? allPosts : allPosts.filter(p => p.category === cat);
+  renderPosts(filtered);
+}
+
+/* ─── ESC ─── */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeLightbox(); closeArticle(); closeMenu(); }
+});
+
+/* ─── INIT ─── */
+loadPosts();
+</script>
+</body>
+</html>
