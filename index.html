@@ -45,24 +45,16 @@
   button { cursor: pointer; border: none; background: none; font: inherit; color: inherit; }
   ::-webkit-scrollbar { width: 3px; }
   ::-webkit-scrollbar-thumb { background: var(--sand); }
-
-  /* PROGRESS */
   #progress-bar { position:fixed; top:0; left:0; height:2px; background:var(--sage); width:0%; z-index:200; transition:width 0.1s; }
-
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.5rem 3rem; transition: background 0.4s, padding 0.3s;
-  }
-  nav.scrolled { background: var(--bg); padding: 1rem 3rem; border-bottom: 1px solid var(--rule); }
-  .nav-logo { font-family: var(--serif-head); font-weight: 700; font-size: 1.1rem; letter-spacing: 0.18em; }
-  .nav-links { display: flex; gap: 2.5rem; list-style: none; font-size: 0.78rem; letter-spacing: 0.1em; }
-  .nav-links a { color: var(--ink-muted); transition: color 0.2s; position: relative; }
+  nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:1.5rem 3rem; transition:background 0.4s, padding 0.3s; }
+  nav.scrolled { background:var(--bg); padding:1rem 3rem; border-bottom:1px solid var(--rule); }
+  .nav-logo { font-family:var(--serif-head); font-weight:700; font-size:1.1rem; letter-spacing:0.18em; }
+  .nav-links { display:flex; gap:2.5rem; list-style:none; font-size:0.78rem; letter-spacing:0.1em; }
+  .nav-links a { color:var(--ink-muted); transition:color 0.2s; position:relative; }
   .nav-links a::after { content:''; position:absolute; bottom:-3px; left:0; width:0; height:1px; background:var(--sage); transition:width 0.3s; }
-  .nav-links a:hover { color: var(--ink); }
-  .nav-links a:hover::after { width: 100%; }
-  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+  .nav-links a:hover { color:var(--ink); }
+  .nav-links a:hover::after { width:100%; }
+  .nav-right { display:flex; align-items:center; gap:1.5rem; }
   #theme-toggle { font-size:0.75rem; letter-spacing:0.08em; color:var(--ink-faint); padding:0.3rem 0.6rem; border:1px solid var(--rule); border-radius:2px; transition:all 0.2s; }
   #theme-toggle:hover { color:var(--ink); border-color:var(--ink-muted); }
   .hamburger { display:none; flex-direction:column; gap:5px; padding:4px; }
@@ -73,8 +65,6 @@
   .mobile-menu { display:none; position:fixed; inset:0; z-index:99; background:var(--bg); flex-direction:column; align-items:center; justify-content:center; gap:2rem; }
   .mobile-menu.open { display:flex; }
   .mobile-menu a { font-family:var(--serif-head); font-size:1.8rem; color:var(--ink); }
-
-  /* HERO */
   #hero { min-height:100vh; display:grid; grid-template-columns:1fr 1fr; overflow:hidden; }
   .hero-text { display:flex; flex-direction:column; justify-content:flex-end; padding:8rem 4rem 5rem 5rem; position:relative; z-index:2; }
   .hero-eyebrow { font-size:0.72rem; letter-spacing:0.2em; color:var(--sage); margin-bottom:2rem; display:flex; align-items:center; gap:1rem; }
@@ -88,10 +78,6 @@
   .hero-image { position:relative; overflow:hidden; background:#2C2420; }
   .hero-image img { width:100%; height:100%; object-fit:cover; object-position:center top; display:block; }
   .hero-image-label { position:absolute; top:3rem; left:-1.5rem; font-family:var(--serif-head); font-style:italic; font-size:6rem; font-weight:900; color:rgba(237,230,217,0.04); white-space:nowrap; pointer-events:none; writing-mode:vertical-rl; transform:rotate(180deg); }
-  .scroll-line { width:1px; height:40px; background:var(--sand); opacity:0.5; animation:scrollPulse 2s ease-in-out infinite; }
-  @keyframes scrollPulse { 0%,100%{opacity:0.3;} 50%{opacity:0.8;} }
-
-  /* INTRO */
   #intro { display:grid; grid-template-columns:5fr 7fr; border-top:1px solid var(--rule); }
   .intro-left { padding:5rem 4rem 5rem 5rem; border-right:1px solid var(--rule); display:flex; flex-direction:column; justify-content:center; }
   .intro-pullquote { font-family:var(--serif-head); font-size:clamp(1.4rem,2.2vw,1.9rem); font-weight:400; line-height:1.4; }
@@ -103,8 +89,6 @@
   .intro-meta { font-size:0.72rem; letter-spacing:0.12em; color:var(--ink-faint); display:flex; gap:2rem; }
   .intro-meta span { display:flex; align-items:center; gap:0.5rem; }
   .intro-meta span::before { content:''; display:block; width:4px; height:4px; border-radius:50%; background:var(--sage); }
-
-  /* STORY */
   #story { background:var(--bg-2); padding:7rem 5rem; border-top:1px solid var(--rule); }
   .story-header { display:grid; grid-template-columns:1fr 2fr; gap:3rem; margin-bottom:6rem; padding-bottom:3rem; border-bottom:1px solid var(--rule); }
   .timeline { display:grid; grid-template-columns:1fr 40px 1fr; position:relative; }
@@ -119,37 +103,18 @@
   .chapter-title { font-family:var(--serif-head); font-size:1.25rem; font-weight:500; margin-bottom:0.8rem; }
   .chapter-body { font-size:0.88rem; line-height:1.75; color:var(--ink-muted); max-width:320px; }
   .timeline-left .chapter-body { margin-left:auto; }
-  .chapter-placeholder { display:inline-block; margin-top:0.8rem; font-size:0.7rem; letter-spacing:0.1em; color:var(--ink-faint); border:1px dashed var(--rule-sand); padding:0.3rem 0.7rem; border-radius:2px; }
   .chapter-img-placeholder { margin-top:1.2rem; width:100%; max-width:280px; height:180px; border:1px dashed var(--rule-sand); border-radius:2px; display:flex; align-items:center; justify-content:center; font-size:0.65rem; letter-spacing:0.12em; color:var(--ink-faint); background:rgba(196,168,130,0.04); }
   .timeline-left .chapter-img-placeholder { margin-left:auto; }
-
-  /* JOURNAL — blog style */
   #journal { padding:7rem 5rem; border-top:1px solid var(--rule); }
   .journal-header { display:grid; grid-template-columns:1fr 2fr; gap:3rem; align-items:end; margin-bottom:5rem; padding-bottom:3rem; border-bottom:1px solid var(--rule); }
   .journal-header-right { display:flex; align-items:flex-end; justify-content:space-between; }
   .categories { display:flex; gap:1rem; flex-wrap:wrap; }
   .cat-btn { font-size:0.7rem; letter-spacing:0.1em; padding:0.4rem 1rem; border:1px solid var(--rule-sand); color:var(--ink-muted); transition:all 0.2s; border-radius:1px; }
   .cat-btn:hover, .cat-btn.active { background:var(--ink); color:var(--bg); border-color:var(--ink); }
-
-  /* Year group */
   .year-group { margin-bottom:4rem; }
-  .year-label {
-    font-family:var(--serif-head);
-    font-size:7rem; font-weight:900;
-    color:var(--rule); line-height:1;
-    margin-bottom:-1.5rem;
-    pointer-events:none;
-    user-select:none;
-  }
+  .year-label { font-family:var(--serif-head); font-size:7rem; font-weight:900; color:var(--rule); line-height:1; margin-bottom:-1.5rem; pointer-events:none; user-select:none; }
   .year-posts { border-top:1px solid var(--rule); }
-  .blog-post-row {
-    display:flex; align-items:baseline; justify-content:space-between;
-    padding:1.5rem 0;
-    border-bottom:1px solid var(--rule);
-    cursor:pointer;
-    transition:all 0.2s;
-    gap:2rem;
-  }
+  .blog-post-row { display:flex; align-items:baseline; justify-content:space-between; padding:1.5rem 0; border-bottom:1px solid var(--rule); cursor:pointer; transition:all 0.2s; gap:2rem; }
   .blog-post-row:hover { padding-left:0.5rem; }
   .blog-post-row:hover .blog-post-title { color:var(--sage); }
   .blog-post-left { display:flex; align-items:baseline; gap:1.5rem; flex:1; }
@@ -158,8 +123,6 @@
   .blog-post-date { font-size:0.72rem; letter-spacing:0.08em; color:var(--ink-faint); white-space:nowrap; }
   .blog-post-arrow { color:var(--ink-faint); font-size:0.9rem; transition:transform 0.2s, color 0.2s; }
   .blog-post-row:hover .blog-post-arrow { transform:translateX(4px); color:var(--sage); }
-
-  /* ARTICLE VIEW */
   #article-view { display:none; position:fixed; inset:0; z-index:150; background:var(--bg); overflow-y:auto; }
   #article-view.open { display:block; }
   .article-close { position:fixed; top:1.5rem; right:2rem; z-index:160; font-size:0.72rem; letter-spacing:0.12em; color:var(--ink-muted); display:flex; align-items:center; gap:0.5rem; transition:color 0.2s; cursor:pointer; border:none; background:none; font-family:var(--serif-body); }
@@ -179,28 +142,18 @@
   .article-body img { width:100%; margin:2rem 0; }
   .article-body strong { font-weight:600; color:var(--ink); }
   #article-progress { position:fixed; top:0; left:0; height:2px; background:var(--sage); z-index:165; width:0; transition:width 0.1s; }
-
-  /* ABOUT */
   #about { background:var(--bg-2); padding:7rem 5rem; border-top:1px solid var(--rule); }
   .about-grid { display:grid; grid-template-columns:5fr 7fr; gap:6rem; align-items:start; }
   .about-left { position:sticky; top:8rem; }
   .about-portrait { aspect-ratio:3/4; background:linear-gradient(160deg,#2C2420,#4A3C30,#3A4830); margin-bottom:1.5rem; position:relative; overflow:hidden; }
   .about-portrait img { width:100%; height:100%; object-fit:cover; }
-  .about-portrait-label { position:absolute; bottom:1.2rem; left:1.2rem; font-size:0.65rem; letter-spacing:0.12em; color:rgba(237,230,217,0.4); }
   .about-name { font-family:var(--serif-head); font-size:1.5rem; font-weight:500; margin-bottom:0.3rem; }
   .about-role { font-size:0.78rem; letter-spacing:0.1em; color:var(--ink-faint); }
   .about-title { font-family:var(--serif-head); font-size:clamp(1.8rem,2.5vw,2.4rem); font-weight:400; line-height:1.25; margin-bottom:2.5rem; }
   .about-body { font-size:1rem; line-height:1.9; color:var(--ink-muted); max-width:560px; }
   .about-body p+p { margin-top:1.4rem; }
-  .about-facts { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:3rem; }
-  .about-fact { background:var(--bg-2); padding:1.5rem; }
-  .fact-label { font-size:0.65rem; letter-spacing:0.15em; color:var(--ink-faint); margin-bottom:0.4rem; }
-  .fact-value { font-family:var(--serif-head); font-size:1rem; font-weight:500; }
-
-  /* VISION */
   #vision { padding:7rem 5rem; border-top:1px solid var(--rule); }
   .vision-headline { font-family:var(--serif-head); font-size:clamp(2rem,3.5vw,3.2rem); font-weight:400; line-height:1.2; max-width:600px; margin-bottom:2rem; }
-  .vision-body { font-size:1rem; line-height:1.85; color:var(--ink-muted); max-width:540px; margin-bottom:5rem; }
   .vision-timeline { position:relative; padding-left:2px; border-left:1px solid var(--rule-sand); margin-left:2rem; }
   .vision-item { position:relative; padding:0 0 3rem 2.5rem; }
   .vision-item::before { content:''; position:absolute; left:-5px; top:0.4rem; width:8px; height:8px; border-radius:50%; border:1px solid var(--sand); background:var(--bg); }
@@ -209,8 +162,6 @@
   .vision-period { font-size:0.68rem; letter-spacing:0.18em; color:var(--ink-faint); margin-bottom:0.5rem; }
   .vision-item-title { font-family:var(--serif-head); font-size:1.1rem; font-weight:500; margin-bottom:0.5rem; }
   .vision-item-body { font-size:0.88rem; line-height:1.7; color:var(--ink-muted); max-width:460px; }
-
-  /* CONTACT */
   #contact { background:var(--bg-2); padding:7rem 5rem; border-top:1px solid var(--rule); display:grid; grid-template-columns:1fr 1fr; gap:6rem; }
   .contact-title { font-family:var(--serif-head); font-size:clamp(1.8rem,2.5vw,2.4rem); font-weight:400; margin-bottom:1.5rem; }
   .contact-body { font-size:0.9rem; line-height:1.8; color:var(--ink-muted); max-width:400px; }
@@ -223,21 +174,15 @@
   .contact-link { display:flex; align-items:center; justify-content:space-between; padding:1rem 0; border-bottom:1px solid var(--rule); font-size:0.9rem; color:var(--ink-muted); transition:color 0.2s; }
   .contact-link:hover { color:var(--ink); }
   .contact-link span { font-size:0.65rem; letter-spacing:0.12em; color:var(--ink-faint); }
-
-  /* FOOTER */
   footer { padding:3rem 5rem; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--rule); }
   .footer-logo { font-family:var(--serif-head); font-size:0.9rem; font-weight:700; letter-spacing:0.18em; }
   .footer-tagline { font-style:italic; font-size:0.82rem; color:var(--ink-faint); }
   .footer-copy { font-size:0.68rem; letter-spacing:0.08em; color:var(--ink-faint); }
-
-  /* UTILS */
   .section-label { font-size:0.68rem; letter-spacing:0.2em; color:var(--ink-faint); }
   .section-title { font-family:var(--serif-head); font-size:clamp(1.8rem,2.8vw,2.6rem); font-weight:400; line-height:1.2; margin-top:0.8rem; }
   .section-body { font-size:0.92rem; line-height:1.8; color:var(--ink-muted); margin-top:1rem; }
   .fade-in { opacity:0; transform:translateY(24px); transition:opacity 0.7s ease, transform 0.7s ease; }
   .fade-in.visible { opacity:1; transform:translateY(0); }
-
-  /* RESPONSIVE */
   @media (max-width:1024px) {
     nav { padding:1.2rem 2rem; } nav.scrolled { padding:0.8rem 2rem; }
     .nav-links { display:none; } .hamburger { display:flex; }
@@ -255,7 +200,6 @@
   }
   @media (max-width:600px) {
     .timeline { grid-template-columns:1fr; } .timeline-left { grid-column:1; text-align:left; padding-right:0; padding-left:1.5rem; } .timeline-right { grid-column:1; padding-left:1.5rem; } .timeline-center,.timeline-spine { display:none; }
-    .about-facts { grid-template-columns:1fr; }
     .blog-post-left { flex-direction:column; gap:0.3rem; }
     .blog-post-cat { min-width:unset; }
     .year-label { font-size:3rem; }
@@ -318,8 +262,7 @@
     <a href="#intro" class="hero-cta">Enter the Journey</a>
   </div>
   <div class="hero-image">
-    <img src="/fazlan-journey/fazlan-site/images/WhatsApp Image 2026-09-03 at 14.12.14.jpeg"
-         alt="Fazlan on a mountain in Sri Lanka">
+    <img src="/fazlan-journey/fazlan-site/images/WhatsApp Image 2026-09-03 at 14.12.14.jpeg" alt="Fazlan on a mountain in Sri Lanka">
     <div class="hero-image-label">FAZLAN</div>
   </div>
 </section>
@@ -338,14 +281,14 @@
     </div>
     <div class="intro-rule"></div>
     <div class="intro-meta">
-      <span>Sri Lanka → Singapore</span>
-      <span>Hospitality · Growth</span>
+      <span>Sri Lanka to Singapore</span>
+      <span>Hospitality and Growth</span>
       <span>Selah Ceylon</span>
     </div>
   </div>
 </section>
 
-<!-- STORY / TIMELINE -->
+<!-- STORY -->
 <section id="story">
   <div class="story-header fade-in">
     <p class="section-label">The chapters so far</p>
@@ -375,7 +318,7 @@
       <p class="chapter-num">Chapter 03</p>
       <h3 class="chapter-title">Hospitality</h3>
       <p class="chapter-body">More than a decade in restaurants, bars, and beverage programs. Learning how to lead, how to hold pressure, how to care for people — both guests and teams.</p>
-      <img src="/fazlan-journey/fazlan-site/images/FOC-Faz.jpeg" alt="Foc" style="margin-top:1.2rem;width:100%;max-width:280px;border-radius:2px;margin-left:auto;display:block;">
+      <img src="/fazlan-journey/fazlan-site/images/FOC-Faz.jpeg" alt="Hospitality" style="margin-top:1.2rem;width:100%;max-width:280px;border-radius:2px;margin-left:auto;display:block;">
     </div>
     <div class="timeline-center" aria-hidden="true"><div class="timeline-dot"></div><div class="timeline-connector"></div></div>
     <div class="timeline-right fade-in"></div>
@@ -391,7 +334,7 @@
       <p class="chapter-num">Chapter 05</p>
       <h3 class="chapter-title">The Person Behind the Job</h3>
       <p class="chapter-body">Ambition. Discipline. Failure. Relationships. The quieter parts of the story that don't appear on a CV but shaped everything else.</p>
-      <img src="/fazlan-journey/fazlan-site/images/Ch5-Faz.jpeg" alt="Chapter-5" style="margin-top:1.2rem;width:100%;max-width:280px;border-radius:2px;margin-left:auto;display:block;">
+      <img src="/fazlan-journey/fazlan-site/images/Ch5-Faz.jpeg" alt="Chapter 5" style="margin-top:1.2rem;width:100%;max-width:280px;border-radius:2px;margin-left:auto;display:block;">
     </div>
     <div class="timeline-center" aria-hidden="true"><div class="timeline-dot"></div><div class="timeline-connector"></div></div>
     <div class="timeline-right fade-in"></div>
@@ -403,12 +346,12 @@
       <p class="chapter-body">Returning to my roots. What Sri Lanka means to me now, as someone who left — and the dreams of building something there that reflects that connection.</p>
       <img src="/fazlan-journey/fazlan-site/images/SL-Faz.jpeg" alt="Sri Lanka" style="margin-top:1.2rem;width:100%;max-width:280px;border-radius:2px;">
     </div>
-        <div class="timeline-center" aria-hidden="true"><div class="timeline-dot"></div><div class="timeline-connector"></div></div>
+    <div class="timeline-center" aria-hidden="true"><div class="timeline-dot"></div><div class="timeline-connector"></div></div>
     <div class="timeline-left fade-in">
       <p class="chapter-num">Chapter 07</p>
       <h3 class="chapter-title">Building Something of My Own</h3>
       <p class="chapter-body">Villa Selah Ceylon. Luxury rooted in Sri Lankan heritage, sustainability, service, serenity.</p>
-      <img src="/fazlan-journey/fazlan-site/images/Selah-Faz.jpeg" alt="selah" style="margin-top:1.2rem;width:100%;max-width:280px;border-radius:2px;margin-left:auto;display:block;">
+      <img src="/fazlan-journey/fazlan-site/images/Selah-Faz.jpeg" alt="Selah" style="margin-top:1.2rem;width:100%;max-width:280px;border-radius:2px;margin-left:auto;display:block;">
     </div>
     <div class="timeline-center" aria-hidden="true"><div class="timeline-dot"></div><div class="timeline-connector"></div></div>
     <div class="timeline-right fade-in"></div>
@@ -422,11 +365,11 @@
   </div>
 </section>
 
-<!-- JOURNAL — blog list style -->
+<!-- JOURNAL -->
 <section id="journal">
   <div class="journal-header fade-in">
     <div>
-      <p class="section-label">Weekly thoughts & stories</p>
+      <p class="section-label">Weekly thoughts and stories</p>
       <h2 class="section-title">Journal</h2>
     </div>
     <div class="journal-header-right">
@@ -471,11 +414,11 @@
 <section id="vision">
   <div class="fade-in">
     <h2 class="vision-headline">What Comes Next?</h2>
+  </div>
   <div class="vision-timeline fade-in">
     <div class="vision-item now"><p class="vision-period">Now</p><h3 class="vision-item-title">Foundations</h3><p class="vision-item-body">Continuing to grow in hospitality leadership. Deepening the vision for Selah Ceylon. Reconnecting with Sri Lanka.</p></div>
     <div class="vision-item future"><p class="vision-period">Near future</p><h3 class="vision-item-title">Villa Selah Ceylon</h3><p class="vision-item-body">Bringing the concept to life. A luxury villa rooted in Sri Lankan heritage. Sustainability, service, serenity. Something built to last.</p></div>
     <div class="vision-item future"><p class="vision-period">Always</p><h3 class="vision-item-title">Becoming a better version of myself</h3><p class="vision-item-body">Travel. Learning. Adventure. The things that keep you honest about who you are and who you still want to be.</p></div>
-  </div>
   </div>
 </section>
 
@@ -499,70 +442,69 @@
   </div>
 </section>
 
+<footer>
+  <span class="footer-logo">FAZLAN</span>
+  <span class="footer-tagline">Still becoming.</span>
+  <span class="footer-copy">© 2026 Fazlan. A life in progress.</span>
+</footer>
+
 <script>
-/* ── POSTS DATA ──
-   To add a new post, just add a new object to this array.
-   Copy the format exactly. The site will update automatically.
-*/
 const POSTS = [
   {
-    title: "Apparently, I’m the Project Now",
+    title: "Apparently, I'm the Project Now",
     date: "2026-09-08",
     category: "Thoughts",
-    excerpt: "So… this is my first blog.",
-    body: `<p> I honestly don't know what I'm doing here, which feels quite appropriate considering how life has been lately.</p>
-<p>The past few months have been a strange mix of work, new projects, random plans, questionable decisions, unexpected conversations, and a lot of <em>"let's see what happens."</em></p>
-<p>And somehow, I'm actually enjoying it.</p>
-<p>I've been working on a few new projects lately, jumping between ideas, meetings, spreadsheets, menus, events, business plans, and approximately 47 things that I probably should not have agreed to.</p>
-<p>But that's me.</p>
-<p>Give me one good idea and five minutes later I've already created a whole business around it in my head.</p>
-<p><em>The funny part? Some of these ideas might actually work.</em></p>
-
-<h2>Life lately: slightly chaotic, but in a good way</h2>
-<p>Work has been keeping me busy, but I've started to realise that I don't want life to be just about work anymore.</p>
-<p>I still love hospitality. I love creating things, building experiences, working with people and turning a random idea into something real.</p>
-<p>But lately, I've also been trying to explore the person behind the job title.</p>
-<p>And honestly… <em>that person is a little weird.</em></p>
-<p>I'm learning what I like, what I don't like, what makes me happy, what drains me, and what kind of life I actually want.</p>
-<p>Some days I feel like I have everything figured out.</p>
-<p>Other days I'm staring at the ceiling thinking:</p>
-<blockquote>"Okay… what the hell am I doing?"</blockquote>
-<p>And somehow, both versions are completely normal.</p>
-
-<h2>Then there are my red flags…</h2>
-<p>Because apparently, self-awareness means admitting your own red flags before someone else does.</p>
-<p><strong>I overthink.</strong> A lot.</p>
-<p>I can analyse a three-word WhatsApp message like it's a United Nations statement.</p>
-<blockquote>"Okay."<br><br>What does okay mean? Are you angry? Are you busy? Did I do something? Should I reply? Should I wait? Should I pretend I didn't see it?</blockquote>
-<p>And then, after approximately 45 minutes of analysis, I usually decide: <em>"Fuck it."</em></p>
-<p>Another red flag? <strong>I like being independent a little too much.</strong></p>
-<p>I'll say, "I don't need anyone." Then five minutes later I'll realise I actually just wanted someone to ask if I ate.</p>
-<p><em>Progress.</em></p>
-<p>I'm also <strong>terrible at doing things halfway.</strong></p>
-<p>If I like something, I go all in. New project? Let's build the whole thing. New idea? Let's make a deck. New restaurant concept? Let's discuss the menu, branding, financials and opening strategy before lunch.</p>
-<p>New person? Well… let's not get into that one. 😂</p>
-
-<h2>I think I'm finally learning to enjoy the unknown</h2>
-<p>For a long time, I thought I needed to have a perfect plan. Career sorted. Relationship sorted. Future sorted. Everything under control.</p>
-<p>But life doesn't really work like that.</p>
-<p>Sometimes you just have to move. Try something. Fail at something. Laugh about it. Try again. And occasionally make a decision that your future self will definitely question.</p>
-<p><em>That's part of growing up, I guess.</em></p>
-<p>Lately, I've been giving myself more space to explore. New projects. New places. New ideas. New people. And most importantly, new versions of myself.</p>
-<p>I'm not trying to become a completely different person. I'm just trying to understand myself a little better.</p>
-<p>Maybe that means becoming more comfortable with uncertainty. Maybe it means learning when to walk away. Maybe it means saying yes to things that scare me. Or maybe it just means finally accepting that I am, in fact, a little chaotic.</p>
-
-<h2>So, what's next?</h2>
-<p><em>Honestly? I have no idea. And for once, I'm okay with that.</em></p>
-<p>There are projects I'm excited about. Things I'm building quietly. Places I want to explore. People I want to meet. Experiences I want to have. And probably a few mistakes waiting around the corner.</p>
-<p>But I'm starting to think that's what makes life interesting.</p>
-<p>This blog is going to be a little bit of everything — my work, my projects, my travels, food and drinks, random thoughts, life lessons I probably learned the hard way. And, of course, the occasional story where I completely ignore my own red flags.</p>
-<p>Because if I'm going to document my life, I might as well be honest about it.</p>
-<p>So here I am. Still figuring things out. Still building things. Still making questionable decisions. Still laughing. Still exploring. And probably still overthinking that "okay" text from three days ago.</p>
-<p style="font-family:'Playfair Display',Georgia,serif;font-size:1.4rem;font-weight:700;color:var(--ink);margin-top:3rem;border-top:1px solid var(--rule-sand);padding-top:2rem;">Welcome to my little corner of the internet.</p>`
+    excerpt: "So this is my first blog.",
+    body: [
+      '<p>I honestly don\'t know what I\'m doing here, which feels quite appropriate considering how life has been lately.</p>',
+      '<p>The past few months have been a strange mix of work, new projects, random plans, questionable decisions, unexpected conversations, and a lot of <em>let\'s see what happens.</em></p>',
+      '<p>And somehow, I\'m actually enjoying it.</p>',
+      '<p>I\'ve been working on a few new projects lately, jumping between ideas, meetings, spreadsheets, menus, events, business plans, and approximately 47 things that I probably should not have agreed to.</p>',
+      '<p>But that\'s me.</p>',
+      '<p>Give me one good idea and five minutes later I\'ve already created a whole business around it in my head.</p>',
+      '<p><em>The funny part? Some of these ideas might actually work.</em></p>',
+      '<h2>Life lately: slightly chaotic, but in a good way</h2>',
+      '<p>Work has been keeping me busy, but I\'ve started to realise that I don\'t want life to be just about work anymore.</p>',
+      '<p>I still love hospitality. I love creating things, building experiences, working with people and turning a random idea into something real.</p>',
+      '<p>But lately, I\'ve also been trying to explore the person behind the job title.</p>',
+      '<p>And honestly... <em>that person is a little weird.</em></p>',
+      '<p>I\'m learning what I like, what I don\'t like, what makes me happy, what drains me, and what kind of life I actually want.</p>',
+      '<p>Some days I feel like I have everything figured out.</p>',
+      '<p>Other days I\'m staring at the ceiling thinking:</p>',
+      '<blockquote>Okay... what the hell am I doing?</blockquote>',
+      '<p>And somehow, both versions are completely normal.</p>',
+      '<h2>Then there are my red flags...</h2>',
+      '<p>Because apparently, self-awareness means admitting your own red flags before someone else does.</p>',
+      '<p><strong>I overthink.</strong> A lot.</p>',
+      '<p>I can analyse a three-word WhatsApp message like it\'s a United Nations statement.</p>',
+      '<blockquote>Okay.<br><br>What does okay mean? Are you angry? Are you busy? Did I do something? Should I reply? Should I wait? Should I pretend I didn\'t see it?</blockquote>',
+      '<p>And then, after approximately 45 minutes of analysis, I usually decide: <em>Fuck it.</em></p>',
+      '<p>Another red flag? <strong>I like being independent a little too much.</strong></p>',
+      '<p>I\'ll say, I don\'t need anyone. Then five minutes later I\'ll realise I actually just wanted someone to ask if I ate.</p>',
+      '<p><em>Progress.</em></p>',
+      '<p>I\'m also <strong>terrible at doing things halfway.</strong></p>',
+      '<p>If I like something, I go all in. New project? Let\'s build the whole thing. New idea? Let\'s make a deck. New restaurant concept? Let\'s discuss the menu, branding, financials and opening strategy before lunch.</p>',
+      '<p>New person? Well... let\'s not get into that one. 😂</p>',
+      '<h2>I think I\'m finally learning to enjoy the unknown</h2>',
+      '<p>For a long time, I thought I needed to have a perfect plan. Career sorted. Relationship sorted. Future sorted. Everything under control.</p>',
+      '<p>But life doesn\'t really work like that.</p>',
+      '<p>Sometimes you just have to move. Try something. Fail at something. Laugh about it. Try again. And occasionally make a decision that your future self will definitely question.</p>',
+      '<p><em>That\'s part of growing up, I guess.</em></p>',
+      '<p>Lately, I\'ve been giving myself more space to explore. New projects. New places. New ideas. New people. And most importantly, new versions of myself.</p>',
+      '<p>I\'m not trying to become a completely different person. I\'m just trying to understand myself a little better.</p>',
+      '<p>Maybe that means becoming more comfortable with uncertainty. Maybe it means learning when to walk away. Maybe it means saying yes to things that scare me. Or maybe it just means finally accepting that I am, in fact, a little chaotic.</p>',
+      '<h2>So, what\'s next?</h2>',
+      '<p><em>Honestly? I have no idea. And for once, I\'m okay with that.</em></p>',
+      '<p>There are projects I\'m excited about. Things I\'m building quietly. Places I want to explore. People I want to meet. Experiences I want to have. And probably a few mistakes waiting around the corner.</p>',
+      '<p>But I\'m starting to think that\'s what makes life interesting.</p>',
+      '<p>This blog is going to be a little bit of everything — my work, my projects, my travels, food and drinks, random thoughts, life lessons I probably learned the hard way. And, of course, the occasional story where I completely ignore my own red flags.</p>',
+      '<p>Because if I\'m going to document my life, I might as well be honest about it.</p>',
+      '<p>So here I am. Still figuring things out. Still building things. Still making questionable decisions. Still laughing. Still exploring. And probably still overthinking that okay text from three days ago.</p>',
+      '<p style="font-family:\'Playfair Display\',Georgia,serif;font-size:1.4rem;font-weight:700;color:var(--ink);margin-top:3rem;border-top:1px solid var(--rule-sand);padding-top:2rem;">Welcome to my little corner of the internet.</p>'
+    ].join('')
   }
 ];
 
-/* ── RENDER POSTS ── */
 let currentPosts = [...POSTS];
 
 function formatDate(dateStr) {
@@ -590,20 +532,15 @@ function renderPosts(posts) {
   const groups = groupByYear(posts);
   let html = '';
   Object.keys(groups).sort((a,b) => b-a).forEach(year => {
-    html += `<div class="year-group">
-      <div class="year-label">${year}</div>
-      <div class="year-posts">`;
-    groups[year].forEach((p, i) => {
-      html += `<div class="blog-post-row" onclick="openArticle(${JSON.stringify(p).replace(/"/g,'&quot;')})">
-        <div class="blog-post-left">
-          <span class="blog-post-cat">${p.category}</span>
-          <span class="blog-post-title">${p.title}</span>
-        </div>
-        <span class="blog-post-date">${formatDate(p.date)}</span>
-        <span class="blog-post-arrow">→</span>
-      </div>`;
+    html += '<div class="year-group"><div class="year-label">' + year + '</div><div class="year-posts">';
+    groups[year].forEach(p => {
+      const safePost = JSON.stringify({title:p.title,date:p.date,category:p.category,excerpt:p.excerpt,body:p.body}).replace(/'/g,"&#39;");
+      html += '<div class="blog-post-row" onclick=\'openArticle(' + safePost + ')\'>';
+      html += '<div class="blog-post-left"><span class="blog-post-cat">' + p.category + '</span><span class="blog-post-title">' + p.title + '</span></div>';
+      html += '<span class="blog-post-date">' + formatDate(p.date) + '</span>';
+      html += '<span class="blog-post-arrow">→</span></div>';
     });
-    html += `</div></div>`;
+    html += '</div></div>';
   });
   container.innerHTML = html;
 }
@@ -615,28 +552,27 @@ function filterPosts(cat, btn) {
   renderPosts(currentPosts);
 }
 
-/* ── ARTICLE VIEW ── */
 function openArticle(post) {
   if (typeof post === 'string') post = JSON.parse(post);
   document.getElementById('article-cat').textContent = (post.category || '').toUpperCase();
   document.getElementById('article-title').textContent = post.title;
-  document.getElementById('article-meta').innerHTML = `<span>${formatDate(post.date)}</span>`;
+  document.getElementById('article-meta').innerHTML = '<span>' + formatDate(post.date) + '</span>';
   document.getElementById('article-content').innerHTML = post.body || '';
   const view = document.getElementById('article-view');
   view.classList.add('open');
   view.scrollTop = 0;
   document.body.style.overflow = 'hidden';
-  view.onscroll = () => {
+  view.onscroll = function() {
     const p = view.scrollTop / (view.scrollHeight - view.clientHeight);
     document.getElementById('article-progress').style.width = (p * 100) + '%';
   };
 }
+
 function closeArticle() {
   document.getElementById('article-view').classList.remove('open');
   document.body.style.overflow = '';
 }
 
-/* ── THEME ── */
 let dark = false;
 function toggleTheme() {
   dark = !dark;
@@ -644,16 +580,14 @@ function toggleTheme() {
   document.getElementById('theme-toggle').textContent = dark ? 'Light' : 'Dark';
 }
 
-/* ── NAV + PROGRESS ── */
 const nav = document.getElementById('nav');
 const progressBar = document.getElementById('progress-bar');
-window.addEventListener('scroll', () => {
+window.addEventListener('scroll', function() {
   nav.classList.toggle('scrolled', window.scrollY > 60);
   const h = document.documentElement;
   progressBar.style.width = (window.scrollY / (h.scrollHeight - h.clientHeight) * 100) + '%';
 });
 
-/* ── MOBILE MENU ── */
 function toggleMenu() {
   document.getElementById('hamburger').classList.toggle('open');
   document.getElementById('mobile-menu').classList.toggle('open');
@@ -663,9 +597,8 @@ function closeMenu() {
   document.getElementById('mobile-menu').classList.remove('open');
 }
 
-/* ── FADE IN ── */
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((e, i) => {
+const observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e, i) {
     if (e.isIntersecting) {
       e.target.style.transitionDelay = (i % 3) * 0.08 + 's';
       e.target.classList.add('visible');
@@ -673,14 +606,12 @@ const observer = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.08 });
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
 
-/* ── ESC ── */
-document.addEventListener('keydown', e => {
+document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') { closeArticle(); closeMenu(); }
 });
 
-/* ── INIT ── */
 renderPosts(POSTS);
 </script>
 </body>
