@@ -452,6 +452,18 @@
       body: new FormData(this),
       headers: { 'Accept': 'application/json' }
     });
+
+    // clear the input
+    this.reset();
+
+    // show a little message
+    const msg = document.createElement('p');
+    msg.textContent = 'Subscribed!';
+    msg.style.cssText = 'margin-top:1rem; font-family:inherit; color:#8a7f72; font-size:0.9rem; letter-spacing:0.05em;';
+    this.parentNode.appendChild(msg);
+
+    // fade it out after 3 seconds
+    setTimeout(() => msg.remove(), 3000);
   });
 </script>
 
