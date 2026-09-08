@@ -428,7 +428,7 @@
   <div class="fade-in">
     <h2 class="contact-title">Stay in touch.</h2>
     <p class="contact-body">If something here resonated with you, or if you're working on something in hospitality, travel, or anything really — I would be glad to hear from you.</p>
-    <form class="newsletter-form" action="https://formspree.io/f/mzebjllg" method="POST">
+    <form id="contact-form" class="newsletter-form" action="https://formspree.io/f/mzebjllg" method="POST">
     <input type="email" name="email" class="newsletter-input" placeholder="Your email address" required>
     <button type="submit" class="newsletter-btn">Subscribe</button>
     </form>
@@ -442,6 +442,18 @@
     </div>
   </div>
 </section>
+
+<script>
+  document.getElementById('contact-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    await fetch('https://formspree.io/f/mzebjllg', {
+      method: 'POST',
+      body: new FormData(this),
+      headers: { 'Accept': 'application/json' }
+    });
+  });
+</script>
 
 <footer>
   <span class="footer-logo">FAZLAN</span>
